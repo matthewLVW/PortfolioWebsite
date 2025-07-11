@@ -36,7 +36,7 @@ export default function Home() {
               DATA ENGINEERING & AI MODELING — Fast, Scalable, Clean
             </h2>
             <p className="text-base md:text-lg leading-relaxed text-gray-400 max-w-3xl lg:pr-10">
-              I build fast, reliable data pipelines and machine-learning systems that scale. From ETL to predictive models, I turn raw data into streamlined, deployable products.
+              I build fast, reliable data pipelines and machine-learning systems that scale. From ETL to predictive models, I turn raw data into streamlined, deployable dashboards.
             </p>
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
