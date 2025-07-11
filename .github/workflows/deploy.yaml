@@ -1,0 +1,41 @@
+# .github/workflows/deploy.yml
+name: Deploy static Next.js site to GitHub Pages
+
+on:
+  push:
+    branches: [main]          # redeploy every push to main
+  workflow_dispatch:          # …or run manually in the UI
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps & build
+        run: |
+          npm ci
+          npm run build          # creates the /out folder
+
+      - name: Upload build as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out            # ← static bundle location :contentReference[oaicite:0]{index=0}
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4
