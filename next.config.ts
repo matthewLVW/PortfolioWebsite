@@ -1,8 +1,12 @@
-import type { NextConfig } from 'next'
+// next.config.ts
+import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {
-  output: 'export',         // <-- add this line
-  // other options here...
-}
+// Define your Next.js configuration
+const config: NextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  // Add additional settings here if needed
+};
 
-export default nextConfig
+// Export the configuration
+export default config;
