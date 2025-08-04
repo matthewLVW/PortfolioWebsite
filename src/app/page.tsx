@@ -1,9 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <main className="min-h-[calc(100vh-4rem)] w-full bg-[url('/bg-tech.jpg')] bg-cover bg-center bg-fixed text-white px-6 py-8 flex flex-col justify-between relative">      <div className="relative z-10">
+    <main className="min-h-[calc(100vh-4rem)] w-full bg-[url('/bg-tech.jpg')] bg-cover bg-center bg-fixed text-white px-6 py-8 flex flex-col justify-between relative">
+      <div className="relative z-10">
         {/* Hero Section */}
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
           {/* Left Text */}
@@ -12,12 +18,10 @@ export default function Home() {
               Matthew Van Winkle
             </h1>
             <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-300">
-                DATA ENGINEERING & AI MODELING — Fast, Scalable, Clean
-
-
+              DATA ENGINEERING & AI MODELING — Fast, Scalable, Clean
             </h2>
             <p className="text-base md:text-lg max-w-xl leading-relaxed mx-auto md:mx-0 text-gray-400">
-               I build fast, reliable data pipelines and machine learning systems that scale. From ETL to predictive models, I turn raw data into streamlined, deployable products.
+              I build fast, reliable data pipelines and machine learning systems that scale. From ETL to predictive models, I turn raw data into streamlined, deployable products.
             </p>
 
             {/* CTAs */}
@@ -29,12 +33,12 @@ export default function Home() {
               >
                 View Résumé
               </Link>
-              <Link
-                href="#contact"
+              <button
+                onClick={() => setIsModalOpen(true)}
                 className="border border-white px-5 py-2 rounded hover:bg-white/10 transition text-white"
               >
                 Contact Me
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -73,6 +77,53 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center px-4">
+          <div className="bg-white text-black rounded-lg shadow-lg p-6 w-full max-w-md relative">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+            >
+              ×
+            </button>
+            <h3 className="text-xl font-semibold mb-4">Contact Me</h3>
+            <form
+              action="https://formspree.io/f/xpwlazqe"
+              method="POST"
+              className="flex flex-col gap-3"
+            >
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+                className="border rounded px-3 py-2"
+              />
+              <input
+                type="email"
+                name="_replyto"
+                placeholder="Your Email"
+                required
+                className="border rounded px-3 py-2"
+              />
+              <textarea
+                name="message"
+                placeholder="Message"
+                required
+                className="border rounded px-3 py-2"
+              />
+              <button
+                type="submit"
+                className="bg-black text-white py-2 rounded hover:bg-gray-900"
+              >
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
@@ -88,5 +139,3 @@ function ProjectCard({ title, description, href }: { title: string; description:
     </Link>
   );
 }
-
-
