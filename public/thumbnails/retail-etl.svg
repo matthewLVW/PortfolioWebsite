@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="retailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#retailGradient)" />
+  <text x="50%" y="48%" fill="#bfdbfe" font-family="Segoe UI, Arial, sans-serif" font-size="34" text-anchor="middle">
+    Retail ETL Reliability
+  </text>
+  <text x="50%" y="62%" fill="#93c5fd" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">
+    Python · Polars · SQLite
+  </text>
+</svg>

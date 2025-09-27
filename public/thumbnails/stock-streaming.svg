@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="stockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#15803d" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#stockGradient)" />
+  <text x="50%" y="48%" fill="#bbf7d0" font-family="Segoe UI, Arial, sans-serif" font-size="32" text-anchor="middle">
+    Real-Time Stock Streaming
+  </text>
+  <text x="50%" y="62%" fill="#dcfce7" font-family="Segoe UI, Arial, sans-serif" font-size="18" text-anchor="middle">
+    Kafka · Snowflake · Streamlit
+  </text>
+</svg>

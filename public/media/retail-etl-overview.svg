@@ -1,0 +1,13 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#0f172a" />
+  <rect x="80" y="120" width="1120" height="480" rx="24" fill="#1e293b" stroke="#3b82f6" stroke-width="3" />
+  <text x="50%" y="40%" fill="#bfdbfe" font-family="Segoe UI, Arial, sans-serif" font-size="56" text-anchor="middle">
+    Retail ETL Reliability
+  </text>
+  <text x="50%" y="52%" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="28" text-anchor="middle">
+    Raw CSV → Validation → Star Schema (SQLite)
+  </text>
+  <text x="50%" y="62%" fill="#93c5fd" font-family="Segoe UI, Arial, sans-serif" font-size="24" text-anchor="middle">
+    QA Flags · Deterministic Upserts · Canonical Naming
+  </text>
+</svg>
