@@ -1,7 +1,10 @@
-﻿"use client";
+"use client";
 import React, { useMemo, useState } from "react";
 import type { ProjectContent } from "@/content/projects";
 import { projects, focusAreas, highlightStats } from "@/content/projects";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const withBasePath = (path: string) => `${basePath}${path}`;
 
 // --- Project Card -----------------------------------------------------
 interface ProjectCardProps {
@@ -22,7 +25,7 @@ function ProjectCard({ project, onSelect }: ProjectCardProps) {
     >
       {project.thumbnail && (
         <img
-          src={project.thumbnail}
+          src={withBasePath(project.thumbnail)}
           alt={project.title}
           className="w-full h-40 object-cover rounded mb-4"
         />
@@ -54,7 +57,7 @@ function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {project.thumbnail && (
           <img
-            src={project.thumbnail}
+            src={withBasePath(project.thumbnail)}
             alt={`${project.title} thumbnail`}
             className="w-full h-48 object-cover rounded mb-6"
           />
@@ -125,7 +128,10 @@ export default function Home() {
 
   return (
     <>
-      <main className="min-h-screen bg-[url('/bg-tech.jpg')] bg-cover bg-center text-white">
+      <main
+        className="min-h-screen bg-cover bg-center text-white"
+        style={{ backgroundImage: `url("${withBasePath("/bg-tech.jpg")}")` }}
+      >
         {/* Hero */}
         <section className="text-center py-16 bg-black/50 px-4">
           <h1 className="text-4xl font-extrabold mb-3">Matthew Van Winkle</h1>
@@ -171,4 +177,3 @@ export default function Home() {
     </>
   );
 }
-

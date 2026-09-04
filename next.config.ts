@@ -1,11 +1,14 @@
-// next.config.ts
 import type { NextConfig } from 'next';
 
-// Define your Next.js configuration
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 const config: NextConfig = {
   reactStrictMode: true,
-  // Add additional settings here if needed
+  output: 'export',
+  basePath,
+  images: {
+    unoptimized: true,
+  },
 };
 
-// Export the configuration
 export default config;

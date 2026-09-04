@@ -1,9 +1,11 @@
-﻿'use client';
+'use client';
 
 import Image from 'next/image';
 import { FaGithub } from 'react-icons/fa';
 import type { ProjectContent } from '@/content/projects';
 import { projects } from '@/content/projects';
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 // ----------------------------------------------------------------------
 // Card Component
@@ -13,7 +15,7 @@ function ProjectCard({ project }: { project: ProjectContent }) {
     <article className="border border-gray-300 dark:border-gray-700 rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow flex flex-col">
       <div className="mb-6 rounded-lg overflow-hidden bg-gray-900/40">
         <Image
-          src={project.thumbnail}
+          src={`${basePath}${project.thumbnail}`}
           alt={`${project.title} visual`}
           width={640}
           height={360}
