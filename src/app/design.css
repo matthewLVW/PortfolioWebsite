@@ -112,6 +112,7 @@ h3 {
 }
 .nav-shell {
   height: 76px;
+  padding-right: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -132,8 +133,11 @@ h3 {
   gap: 24px;
 }
 .theme-control {
-  position: relative;
-  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  display: flex;
+  transform: translateY(-50%);
 }
 .theme-toggle {
   display: inline-flex;
@@ -159,6 +163,13 @@ h3 {
 .theme-toggle svg {
   width: 18px;
   height: 18px;
+}
+.theme-toggle .theme-icon-dark,
+:root[data-theme="dark"] .theme-toggle .theme-icon-light {
+  display: none;
+}
+:root[data-theme="dark"] .theme-toggle .theme-icon-dark {
+  display: block;
 }
 .theme-menu {
   position: absolute;
@@ -883,6 +894,7 @@ h3 {
   }
   .nav-shell {
     height: 70px;
+    padding-right: 56px;
     gap: 20px;
   }
   .wordmark {
@@ -996,7 +1008,11 @@ h3 {
   }
   .nav-shell {
     height: 66px;
+    padding-right: 52px;
     gap: 12px;
+  }
+  .theme-control {
+    right: 20px;
   }
   .nav-actions {
     gap: 12px;
@@ -1260,6 +1276,9 @@ h3 {
   }
 }
 @media (max-width: 360px) {
+  .nav-shell {
+    padding-right: 49px;
+  }
   .wordmark {
     font-size: 12px;
   }

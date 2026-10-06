@@ -9,9 +9,10 @@ const choices: { value: Theme; label: string }[] = [
   { value: "system", label: "System" },
 ];
 
-function ThemeIcon({ theme }: { theme: Theme }) {
+function ThemeIcon({ theme, className }: { theme: Theme; className?: string }) {
   return (
     <svg
+      className={className}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -156,7 +157,8 @@ export default function ThemeToggle() {
           setOpen(true);
         }}
       >
-        <ThemeIcon theme={theme} />
+        <ThemeIcon theme="light" className="theme-icon-light" />
+        <ThemeIcon theme="dark" className="theme-icon-dark" />
       </button>
       {open && (
         <div

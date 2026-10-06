@@ -46,9 +46,9 @@ export default function Navbar() {
               Contact
             </a>
           </div>
-          <ThemeToggle />
         </div>
       </nav>
+      <ThemeToggle />
     </header>
   );
 }
