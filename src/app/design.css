@@ -131,8 +131,11 @@ h3 {
   align-items: center;
   gap: 24px;
 }
-.theme-toggle {
+.theme-control {
   position: relative;
+  flex-shrink: 0;
+}
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -141,7 +144,7 @@ h3 {
   height: 40px;
   padding: 0;
   border: 1px solid var(--line);
-  border-radius: 50%;
+  border-radius: 8px;
   background: var(--surface);
   color: var(--muted);
 }
@@ -149,32 +152,74 @@ h3 {
   background: var(--surface-hover);
   color: var(--ink);
 }
-.theme-select {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
-.theme-toggle:has(.theme-select:focus-visible) {
-  outline: 3px solid var(--focus);
-  outline-offset: 4px;
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 .theme-toggle svg {
   width: 18px;
   height: 18px;
 }
-.theme-sun,
-.theme-moon,
-.theme-system {
-  display: none;
+.theme-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 216px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow:
+    0 12px 32px #00000024,
+    0 2px 6px #00000012;
 }
-:root[data-theme-preference="system"] .theme-system,
-:root[data-theme-preference="light"] .theme-sun,
-:root[data-theme-preference="dark"] .theme-moon {
+.theme-menu-heading {
+  padding: 8px 10px 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--quiet);
+}
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 10px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.theme-option > svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.theme-option small {
   display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.theme-option[aria-checked="true"],
+.theme-option:hover {
+  background: var(--surface-hover);
+}
+.theme-option .theme-check {
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: var(--blue);
+}
+.theme-option:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
 }
 .nav-links {
   display: flex;
