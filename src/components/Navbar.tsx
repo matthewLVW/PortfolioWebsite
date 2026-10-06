@@ -1,14 +1,50 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const home = usePathname() === "/";
+  const close = () => setOpen(false);
   return (
-    <nav className="w-full p-4 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
-      <h2 className="text-xl font-semibold">Matthew VW</h2>
-      <div className="space-x-6">
-        <Link href="/" className="hover:underline">Home</Link>
-        <Link href="/projects" className="hover:underline">Projects</Link>
-        <Link href="/resume" className="hover:underline">Resume</Link>
-      </div>
-    </nav>
+    <header className="site-header">
+      <nav className="nav-shell shell" aria-label="Main navigation">
+        <Link
+          className="wordmark"
+          href="/"
+          onClick={close}
+          aria-label="Matthew Van Winkle home"
+        >
+          Matthew Van Winkle
+          <span className="wordmark-dot" aria-hidden="true">
+            .
+          </span>
+        </Link>
+        <button
+          className="menu-toggle"
+          aria-expanded={open}
+          aria-controls="nav-links"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? "Close" : "Menu"}
+          <span aria-hidden="true">{open ? "−" : "+"}</span>
+        </button>
+        <div id="nav-links" className={`nav-links ${open ? "is-open" : ""}`}>
+          <Link href={home ? "#work" : "/#work"} onClick={close}>
+            Projects
+          </Link>
+          <Link href={home ? "#experience" : "/#experience"} onClick={close}>
+            Experience
+          </Link>
+          <Link href="/resume" onClick={close}>
+            Resume
+          </Link>
+          <a href="mailto:matthewlvw@gmail.com" onClick={close}>
+            Contact
+          </a>
+        </div>
+      </nav>
+    </header>
   );
 }

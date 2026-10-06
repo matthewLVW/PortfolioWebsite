@@ -1,37 +1,68 @@
+import type { Metadata } from "next";
+import { experience, projects } from "@/content/projects";
+import { Arrow } from "@/components/Icons";
+import Link from "next/link";
+export const metadata: Metadata = { title: "Resume" };
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export default function ResumePage() {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-  const resumeUrl = `${basePath}/resume.pdf`;
-
   return (
-    <main className="min-h-screen px-6 py-20 flex flex-col items-center bg-blue-200 dark:bg-[#0a1a2f] text-gray-900 dark:text-white transition-colors duration-300">
-      <h1 className="text-4xl font-bold mb-4">Resume</h1>
-      <p className="mb-6 text-center text-lg max-w-xl">
-        You can view or download my resume below.
-      </p>
-
-      <div className="flex gap-4">
+    <main id="main" className="resume-page shell">
+      <header className="resume-heading">
+        <div>
+          <h1>Resume</h1>
+          <p>Matthew Van Winkle · Software engineer</p>
+        </div>
         <a
-          href={resumeUrl}
-          download
-          className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 transition"
+          className="button button-primary"
+          href={`${basePath}/resume.pdf`}
+          download="Matthew-Van-Winkle-Resume.pdf"
         >
-          Download PDF
+          Download PDF <Arrow diagonal />
         </a>
-        <a
-          href={resumeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-4 py-2 border border-gray-500 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-        >
-          View in New Tab
-        </a>
+      </header>
+      <div className="resume-grid">
+        <aside>
+          <h2>Education</h2>
+          <p>
+            <strong>B.A. Computer Science</strong>
+            <br />
+            University of Colorado Boulder
+            <br />
+            Completed July 2025
+          </p>
+          <h2>Core tools</h2>
+          <p>
+            Python · SQL · Kafka · Snowflake · DuckDB · SQLite · Polars · dbt ·
+            Playwright · Streamlit
+          </p>
+          <h2>Contact</h2>
+          <a href="mailto:matthewlvw@gmail.com">matthewlvw@gmail.com</a>
+        </aside>
+        <div>
+          <h2>Experience</h2>
+          <div className="experience-list">
+            {experience.map((item) => (
+              <article key={item.role}>
+                <h3>{item.role}</h3>
+                <p className="experience-company">{item.company}</p>
+                <p className="experience-date">{item.date}</p>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
+          <h2 className="resume-projects-title">Selected projects</h2>
+          {projects.map((project) => (
+            <Link
+              className="resume-project"
+              href={`/projects/${project.slug}`}
+              key={project.slug}
+            >
+              <span>{project.subtitle}</span>
+              <Arrow diagonal />
+            </Link>
+          ))}
+        </div>
       </div>
-
-      <iframe
-        src={resumeUrl}
-        title="Matthew Van Winkle resume"
-        className="mt-10 w-full max-w-4xl h-[800px] border border-gray-300 dark:border-gray-700"
-      ></iframe>
     </main>
   );
 }

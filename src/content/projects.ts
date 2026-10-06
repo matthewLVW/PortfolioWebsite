@@ -1,131 +1,146 @@
-﻿export interface ProjectChallenge {
-  title: string;
-  body: string;
-}
-
-export interface ProjectContent {
+export type Project = {
   slug: string;
+  number: string;
+  category: string;
   title: string;
+  subtitle: string;
   summary: string;
-  longSummary: string;
+  business: string;
+  technical: string;
   stack: string[];
-  challenges: ProjectChallenge[];
-  learned: string[];
-  repo: string;
-  thumbnail: string;
-}
+  repo?: string;
+  videoUrl?: string;
+  videoDuration: string;
+  metric: string;
+  metricLabel: string;
+  challenge: string;
+  approach: string[];
+  tradeoff: string;
+  takeaway: string;
+};
 
-export const projects: ProjectContent[] = [
+export const projects: Project[] = [
   {
-    slug: 'retail-etl',
-    title: 'Retail ETL Reliability',
+    slug: "market-streaming",
+    number: "01",
+    category: "REAL-TIME SYSTEMS",
+    title: "A clearer picture.\nA fresher signal.",
+    subtitle: "Market data streaming platform",
     summary:
-      'Built a reliable ETL that ingests raw retail CSVs, cleans them, and loads a normalized star schema in SQLite.',
-    longSummary:
-      'A Python ETL that ingests messy retail exports, applies deterministic cleaning and validation, and promotes curated dimension + fact tables to SQLite for lightweight analytics.',
-    stack: ['Python', 'Pandas/Polars', 'SQLite'],
-    challenges: [
-      {
-        title: 'Dirty & inconsistent source data',
-        body:
-          'Handled invalid or missing dates, mismatched totals, inconsistent categories, and duplicates. Validation rules and anomaly flags preserved lineage instead of throwing data away.',
-      },
-      {
-        title: 'Designing an analytics-ready schema',
-        body:
-          'Modeled a star schema (fact_transactions, dim_date, dim_product, dim_store, dim_payment) with staging tables for idempotent loads and referential checks before promotion.',
-      },
-      {
-        title: 'Deterministic deduplication',
-        body:
-          'Introduced composite business keys and load timestamps to power deterministic upserts, documenting merge rules for transparency.',
-      },
+      "A Kafka pipeline aggregating market ticks into one-second bars, with a live dashboard, batched Snowflake storage, and latency monitoring.",
+    business:
+      "A market dashboard is only useful if you can trust how fresh it is. I built a pipeline that makes latency visible and separates immediate insight from warehouse analytics.",
+    technical:
+      "Python and Kafka process market ticks into 1-second OHLCV bars. A real-time dashboard sits alongside batched Snowflake delivery, with timestamped metrics to track freshness.",
+    stack: ["Python", "Kafka", "Snowflake", "Streamlit"],
+    repo: "https://github.com/matthewLVW/SnowflakeRealtimeStreaming",
+    videoUrl: "https://youtu.be/jRSKh9EK6B0",
+    videoDuration: "2:01",
+    metric: "1s",
+    metricLabel: "aggregation windows",
+    challenge:
+      "Live monitoring and historical analysis need the same data, but they have different latency and cost requirements. Sending every tick to a warehouse is an expensive answer to the wrong question.",
+    approach: [
+      "Separate ingestion, aggregation, and persistence with Kafka topics and explicit data contracts.",
+      "Aggregate market ticks into one-second OHLCV bars for the local dashboard, while batching rollups for Snowflake.",
+      "Expose ingestion lag and data freshness through timestamped logging, metrics, and dashboard views.",
+      "Use validation scripts and deterministic identifiers to reason about duplicates and aggregate correctness.",
     ],
-    learned: [
-      'Codifying data-quality rules and surfacing QA flags for stakeholders.',
-      'Balancing dimensional modeling tradeoffs for small OLAP workloads.',
-      'Designing idempotent, restartable loads with clear lineage.',
-    ],
-    repo: 'https://github.com/matthewLVW/ETL_Retail_Portfolio',
-    thumbnail: '/thumbnails/retail-etl.svg',
+    tradeoff:
+      "Freshness versus compute cost. The real-time path serves immediate monitoring; batched warehouse writes support analysis without making every incoming event a warehouse operation.",
+    takeaway:
+      "I would start a customer conversation with the decision they need to make and how fresh its data must be. The architecture follows that requirement.",
   },
   {
-    slug: 'nyc-taxi-pipeline',
-    title: 'NYC Taxi Medallion Pipeline (Local Lakehouse)',
+    slug: "taxi-lakehouse",
+    number: "02",
+    category: "DATA PLATFORMS",
+    title: "Millions of rows.\nOne useful answer.",
+    subtitle: "NYC taxi lakehouse & analytics",
     summary:
-      'Local medallion pipeline with Polars + DuckDB + dbt, optimized for memory and speed across Bronze -> Silver -> Gold layers.',
-    longSummary:
-      'A local lakehouse pipeline processing NYC Taxi parquet files: Bronze unifies raw data, Silver standardizes and flags data quality issues, and Gold dbt models in DuckDB deliver a queryable star schema.',
-    stack: ['Polars', 'DuckDB', 'dbt', 'Python'],
-    challenges: [
-      {
-        title: 'Large files on a single machine',
-        body:
-          'Leverages Polars lazy scans, projection/predicate pushdown, and chunked writes to keep peak memory modest while still performing joins and aggregations.',
-      },
-      {
-        title: 'Medallion contracts & QA flags',
-        body:
-          'Standardized canonical names, normalized datetimes, enforced enums, and added QA flags for outliers, negative fares, and improbable speeds.',
-      },
-      {
-        title: 'Gold star schema with tests',
-        body:
-          'Modeled FACT_TRIPS with supporting dimensions in dbt and layered tests for unique keys, not-null constraints, and custom fare component tolerances.',
-      },
+      "Processed 56 million trips into a tested data warehouse and three executive dashboards, with a 94.7% QA pass rate.",
+    business:
+      "Turn raw trip records into data someone can actually use. This local analytics platform takes 56 million trips through quality checks and into three executive dashboards.",
+    technical:
+      "Polars lazy scans prepare Bronze and Silver Parquet layers. DuckDB and dbt model the Gold layer, with tested dimensions, facts, and curated analytics marts.",
+    stack: ["Python", "Polars", "DuckDB", "dbt"],
+    repo: "https://github.com/matthewLVW/NYC_Taxi_Portfolio",
+    videoUrl: "https://youtu.be/F2tun2CSJp4",
+    videoDuration: "4:21",
+    metric: "56M",
+    metricLabel: "trip records processed",
+    challenge:
+      "Raw data is not a decision tool. Inconsistent types, questionable fares, and ambiguous definitions make even a simple revenue question hard to answer reliably.",
+    approach: [
+      "Bring 15 monthly Parquet files into consistent Bronze, Silver, and Gold layers, with explicit contracts between each.",
+      "Process 56 million trips with a 94.7% QA pass rate. Quarantine anomalies and fare mismatches instead of silently fixing them.",
+      "Use Polars, DuckDB, and dbt to create reproducible dimensions, facts, and analytics marts, backed by 60+ validation tests.",
+      "Build three executive views: Company Pulse, Strategic Levers, and Zone Heat, connecting operational questions to explorable data.",
     ],
-    learned: [
-      'Applying medallion architecture on commodity hardware.',
-      'Promoting only contract-compliant rows forward in the pipeline.',
-      'Authoring dbt models and tests in DuckDB for trusted marts.',
-    ],
-    repo: 'https://github.com/matthewLVW/NYC_Taxi_Portfolio',
-    thumbnail: '/thumbnails/nyc-taxi.svg',
+    tradeoff:
+      "Portability versus distributed scale. A local stack makes the project reproducible and easy to demonstrate; a shared enterprise deployment would need a different concurrency and operational design.",
+    takeaway:
+      "The useful demo starts with an answer in a dashboard, then traces it back to the data contract and quality checks that make that answer credible.",
   },
   {
-    slug: 'stock-streaming',
-    title: 'Real-Time Stock Streaming to Snowflake',
+    slug: "retail-etl",
+    number: "03",
+    category: "RELIABLE FOUNDATIONS",
+    title: "Messy exports.\nMeaningful answers.",
+    subtitle: "Retail ETL & data quality",
     summary:
-      'Kafka-driven 1-second OHLCV aggregation with micro-batched loads to Snowflake and a simple real-time dashboard.',
-    longSummary:
-      'Simulates live market ticks into Kafka, aggregates them to 1-second OHLCV bars, reconciles against raw data, and micro-batches trusted bars into Snowflake with cost-aware warehouse usage.',
-    stack: ['Kafka', 'Python', 'Snowflake', 'Streamlit'],
-    challenges: [
-      {
-        title: 'Coordinating multi-stage streaming',
-        body:
-          'Split producer, consumer, and aggregator roles with explicit JSON contracts and monitored end-to-end latency while keeping micro-batches backpressure-safe.',
-      },
-      {
-        title: 'Cost & correctness in Snowflake',
-        body:
-          'Used auto-suspend XS warehouses and wrote 5-row-per-minute aggregates instead of raw ticks, with reconciliation checks to guarantee bar accuracy.',
-      },
-      {
-        title: 'Observability & validation',
-        body:
-          'Added ingest latency and consumer lag metrics plus a replay validator comparing aggregated vs. raw streams for drift detection.',
-      },
+      "A repeatable workflow that cleans sales data, validates records, and produces structured tables and reporting outputs.",
+    business:
+      "Before a business can trust its reports, it needs to trust the data underneath. I built a repeatable path from raw retail exports to a structured, queryable model.",
+    technical:
+      "A Python ETL workflow cleans raw CSVs and loads a SQLite star schema. Validation rules flag anomalies, while deterministic keys support repeatable loads.",
+    stack: ["Python", "SQL", "SQLite", "Data modeling"],
+    repo: "https://github.com/matthewLVW/ETL_Retail_Portfolio",
+    videoUrl: "https://youtu.be/wQX-hpfx584",
+    videoDuration: "1:30",
+    metric: "CSV → SQL",
+    metricLabel: "from raw exports to useful data",
+    challenge:
+      "Missing dates, inconsistent categories, duplicates, and mismatched totals can quietly undermine reporting. A useful pipeline has to make these issues visible before data reaches a dashboard.",
+    approach: [
+      "Ingest raw sales data and standardize mixed types, missing values, discounts, and mismatched totals.",
+      "Stage records to deduplicate and enforce types; normalize dimension lookups and join facts at row level.",
+      "Deliver clean tables for analysis, quality-assurance tables for review, plots, and a JSON audit.",
+      "Frame the analysis around practical questions: who drives revenue, where money is spent, and when demand occurs.",
     ],
-    learned: [
-      'Designing event-driven pipelines with durable messaging and contracts.',
-      'Balancing latency, cost, and fidelity landing streaming data in warehouses.',
-      'Building lightweight validation to keep real-time aggregates trustworthy.',
-    ],
-    repo: 'https://github.com/matthewLVW/SnowflakeRealtimeStreaming',
-    thumbnail: '/thumbnails/stock-streaming.svg',
+    tradeoff:
+      "Simplicity versus scale. SQLite keeps the workflow lightweight and inspectable. A multi-user production platform would need additional access controls, orchestration, and a storage strategy suited to its workload.",
+    takeaway:
+      "Data quality is a business conversation. I would demonstrate what happens to a problematic record and explain how that affects the report someone uses to make a decision.",
   },
 ];
 
-export const focusAreas = [
-  'Reliable batch ETL',
-  'Medallion lakehouse patterns',
-  'Streaming analytics to warehouses',
+export const experience = [
+  {
+    date: "October 2025 — September 2026",
+    role: "Research Assistant",
+    summary:
+      "Built research pipelines that turn 10K+ web and PDF documents into structured datasets.",
+    company: "University of Colorado Boulder",
+    description:
+      "Built web and PDF extraction pipelines for research with Kai Larsen. Python, Playwright, and LLM-based extraction turned 10K+ documents into normalized JSON, with dashboards for pipeline health and coverage.",
+  },
+  {
+    date: "January 2024 — May 2025",
+    role: "Course Assistant",
+    summary:
+      "Taught SQL, relational modeling, and computer systems concepts through four semesters of office hours.",
+    company: "University of Colorado Boulder",
+    description:
+      "Supported Database Systems and Computer Systems across four semesters. Office hours meant translating SQL, relational modeling, and systems concepts into explanations that met people where they were.",
+  },
+  {
+    date: "May — August 2020",
+    role: "Data Migration Intern",
+    summary:
+      "Supported data validation and workflow continuity during a move to Litify, a Salesforce-based platform.",
+    company: "Allen, Allen, Allen & Allen",
+    description:
+      "Supported a move from a legacy case management system to Litify, built on Salesforce. Assisted with data validation and workflow continuity through the transition.",
+  },
 ];
-
-export const highlightStats = [
-  { metric: '5', label: 'Retail star-schema tables' },
-  { metric: '3', label: 'Bronze to Gold layers' },
-  { metric: '1s', label: 'OHLCV aggregation window' },
-];
-

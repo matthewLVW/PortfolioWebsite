@@ -5,14 +5,15 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "node scripts/serve.mjs",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "15.3.3",
+    "next": "15.5.27",
     "nodemailer": "^7.0.5",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.0.8",
+    "react-dom": "19.0.8",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
@@ -22,7 +23,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.3.3",
+    "eslint-config-next": "15.5.27",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
