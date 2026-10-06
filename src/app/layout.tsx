@@ -23,7 +23,20 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      data-theme="light"
+      data-theme-preference="system"
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){var p="system";try{var s=localStorage.getItem("portfolio-theme");if(s==="light"||s==="dark")p=s}catch{}var d=document.documentElement;d.dataset.themePreference=p;d.dataset.theme=p==="system"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):p})()',
+          }}
+        />
+      </head>
       <body className={`${sans.variable} ${mono.variable}`}>
         <a className="skip-link" href="#main">
           Skip to content

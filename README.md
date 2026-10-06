@@ -4,6 +4,8 @@ A personal software engineering portfolio focused on the next step into sales an
 
 The layout is deliberately conventional: introduction, selected projects, experience, and contact. The five-step approach panel is the single distinctive interaction. Discover and Build establish the solution; Re-Discover and Rebuild bring stakeholder feedback back into the work; Present/Pitch connects the result to stakeholder priorities. The panel supports pointer and keyboard navigation, and it does not advance automatically.
 
+The light palette uses a soft off-white background. The header's color-theme selector offers System (the default), Light, and Dark. System follows the browser/OS preference and updates when it changes; explicit choices persist locally. The initial theme is applied before page content is painted, and printed pages use the light palette.
+
 ## Local development
 
 ```sh
